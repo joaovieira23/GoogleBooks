@@ -18,6 +18,16 @@ interface IPropsBookCard {
   infoLink: string;
   id: number;
   volumeInfo: {
+    authors: string;
+    language: string;
+    title: string;
+    subtitle: string;
+    pageCount: number;
+    previewLink: string;
+    infoLink: string;
+    publisher: string;
+    description: string;
+
     imageLinks: {
       smallThumbnail: string;
       thumbnail: string;
@@ -100,7 +110,17 @@ function App() {
 
       return (
         <div className="col-lg-4" key={item.id}>
-          <BookCard thumbnail={thumbnail} />
+          <BookCard
+            thumbnail={thumbnail}
+            title={item.volumeInfo.title}
+            pageCount={item.volumeInfo.pageCount}
+            language={item.volumeInfo.language}
+            authors={item.volumeInfo.authors}
+            publisher={item.volumeInfo.publisher}
+            description={item.volumeInfo.description}
+            previewLink={item.volumeInfo.previewLink}
+            infoLink={item.volumeInfo.infoLink}
+          />
         </div>
       )
     })
