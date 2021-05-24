@@ -3,17 +3,33 @@ import './App.css';
 import { InputGroup, Input, InputGroupAddon, FormGroup, Label } from 'reactstrap';
 import { toast, ToastContainer, Toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 function App() {
   const [maxResults, setMaxResults] = useState(10);
   const [startIndex, setStartIndex] = useState(1);
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
-
+  const [cards, setCards] = useState([])
   function handleSubmit() {
     setLoading(true);
     if (maxResults > 40 || maxResults < 1) {
       toast.error("O valor de resultados está fora do intervalo")
+    } else {
+      axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=${maxResults}&startIndex=${startIndex}`).then(res => {
+        if (startIndex >= res.data.totalItems || startIndex < 1) {
+          toast.error(`Máximo de resultados superior ao esperado`)
+        } else {
+          if (res.data.items.length > 0) {
+            setCards(res.data.items);
+            setLoading(false);
+            console.log('cards', cards)
+          }
+        }
+        console.log(res.data)
+      }).catch(err => {
+        console.log(err)
+      })
     }
 
   }
