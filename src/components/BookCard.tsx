@@ -39,7 +39,7 @@ const BookCard = ({
       />
       <CardBody>
         <CardTitle className='card-title'>{title}</CardTitle>
-        <Button onClick={toggle}>More info</Button>
+        <Button onClick={toggle}>Mais Informações</Button>
       </CardBody>
       <Modal isOpen={modal} toggle={toggle}>
         <div className='modal-header d-flex justify-content-center'>
