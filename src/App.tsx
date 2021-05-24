@@ -127,7 +127,9 @@ function App() {
     if (loading) {
       return (
         <div className="d-flex justify-content-center mt-3">
-          <Spinner style={{ width: '3rem', height: '3rem' }} />
+          <Spinner style={{ width: '3rem', height: '3rem' }} >
+            ''
+          </Spinner>
         </div>
       )
     } else {

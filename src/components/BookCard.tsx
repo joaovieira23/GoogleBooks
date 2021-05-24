@@ -44,9 +44,16 @@ const BookCard = ({
       <Modal isOpen={modal} toggle={toggle}>
         <div className='modal-header d-flex justify-content-center'>
           <h5 className='modal-title text-center' id='exampleModalLabel'>
-            {title}
+            <span style={{ marginRight: 12 }}> {title} </span>
           </h5>
           <button
+            style={{
+              border: 'none',
+              borderRadius: 5,
+              width: 22,
+              color: 'red',
+
+            }}
             aria-label='Close'
             className='close'
             type='button'
