@@ -4,13 +4,33 @@ import { InputGroup, Input, InputGroupAddon, FormGroup, Label, Spinner } from 'r
 import { toast, ToastContainer, Toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import BookCard from './components/BookCard';
+
+interface IPropsBookCard {
+  thumbnail: string;
+  title: string;
+  pageCount: number;
+  language: string;
+  description: string;
+  authors: string;
+  publisher: string;
+  previewLink: string;
+  infoLink: string;
+  id: number;
+  volumeInfo: {
+    imageLinks: {
+      smallThumbnail: string;
+      thumbnail: string;
+    }
+  };
+}
 
 function App() {
   const [maxResults, setMaxResults] = useState(10);
   const [startIndex, setStartIndex] = useState(1);
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
-  const [cards, setCards] = useState([])
+  const [cards, setCards] = useState<IPropsBookCard[]>()
   function handleSubmit() {
     setLoading(true);
     if (maxResults > 40 || maxResults < 1) {
@@ -72,7 +92,7 @@ function App() {
   }
 
   const handleCards = () => {
-    const items = cards.map((item, i) => {
+    const items = cards?.map((item, i) => {
       let thumbnail = '';
       if (item.volumeInfo.imageLinks.thumbnail) {
         thumbnail = item.volumeInfo.imageLinks.thumbnail
