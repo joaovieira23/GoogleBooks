@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import { InputGroup, Input, InputGroupAddon, FormGroup, Label } from 'reactstrap';
+import { InputGroup, Input, InputGroupAddon, FormGroup, Label, Spinner } from 'reactstrap';
 import { toast, ToastContainer, Toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
@@ -28,7 +28,8 @@ function App() {
         }
         console.log(res.data)
       }).catch(err => {
-        console.log(err)
+        setLoading(true);
+        toast.error(`${err.response.data.error.message}`)
       })
     }
 
@@ -70,8 +71,37 @@ function App() {
     )
   }
 
-  return <div>
+  const handleCards = () => {
+    const items = cards.map((item, i) => {
+      let thumbnail = '';
+      if (item.volumeInfo.imageLinks.thumbnail) {
+        thumbnail = item.volumeInfo.imageLinks.thumbnail
+      }
+
+      return (
+        <div className="col-lg-4" key={item.id}>
+          <BookCard thumbnail={thumbnail} />
+        </div>
+      )
+    })
+    if (loading) {
+      return (
+        <div className="d-flex justify-content-center mt-3">
+          <Spinner style={{ width: '3rem', height: '3rem' }} />
+        </div>
+      )
+    } else {
+      return (
+        <div className="container my-5">
+          <div className="row">{items}</div>
+        </div>
+      )
+    }
+  }
+
+  return <div className="w-100 h-100">
     {mainHeader()}
+    {handleCards()}
     <ToastContainer />
   </div>;
 }
