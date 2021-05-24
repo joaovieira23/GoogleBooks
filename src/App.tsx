@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
 import { InputGroup, Input, InputGroupAddon, FormGroup, Label } from 'reactstrap';
+import { toast, ToastContainer, Toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [maxResults, setMaxResults] = useState(10);
@@ -9,6 +11,10 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   function handleSubmit() {
+    setLoading(true);
+    if (maxResults > 40 || maxResults < 1) {
+      toast.error("O valor de resultados está fora do intervalo")
+    }
 
   }
 
@@ -48,11 +54,10 @@ function App() {
     )
   }
 
-  return (
-    <div className="App">
-      {mainHeader()}
-    </div>
-  );
+  return <div>
+    {mainHeader()}
+    <ToastContainer />
+  </div>;
 }
 
 export default App;
